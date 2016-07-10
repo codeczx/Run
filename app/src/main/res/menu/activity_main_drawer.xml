@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homePage"
+            android:icon="@drawable/ic_run"
+            android:title="@string/homepage"/>
+
+        <item
+            android:id="@+id/exercise"
+            android:icon="@drawable/ic_record"
+            android:title="@string/exercise"/>
+
+        <item
+            android:id="@+id/group"
+            android:title="@string/group"/>
+
+    </group>
+
+    <item android:title="More Options">
+        <menu>
+
+            <item
+                android:id="@+id/set_profile"
+                android:title="个人资料"/>
+
+            <item
+                android:id="@+id/login_out"
+                android:title="退出"/>
+        </menu>
+    </item>
+
+
+</menu>
