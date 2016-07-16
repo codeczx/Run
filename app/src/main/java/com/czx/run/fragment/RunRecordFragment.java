@@ -18,11 +18,11 @@ import com.czx.run.model.RecordResult;
 import com.czx.run.model.RunRecord;
 import com.czx.run.adapter.RunRecordAdapter;
 import com.czx.run.activity.ShowDetailActivity;
+import com.czx.run.model.RunRecordItem;
 import com.czx.run.utils.LogUtils;
 import com.czx.run.utils.RunAPIService;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -36,7 +36,7 @@ public class RunRecordFragment extends Fragment {
 
     public static final String TOKEN = "token";
     private String token;
-    private List<RunRecord> records = new ArrayList<>();
+    private List<RunRecordItem> records = new ArrayList<>();
     private RunRecordAdapter adapter;
 
     public RunRecordFragment(){}
@@ -89,9 +89,10 @@ public class RunRecordFragment extends Fragment {
                         public void onNext(RecordResult recordResult) {
                             if(recordResult.getResultCode() == 0){
                                 Log.i(""+this.getClass(),"获取记录成功~");
-//                                reBuildList(recordResult.getRecords());
+                                reBuildList(recordResult.getRecords());
                                 LogUtils.i(getClass(),recordResult.getRecords().size()+"");
-                                adapter.updateMyList(recordResult.getRecords());
+//                                adapter.updateMyList(recordResult.getRecords());
+                                adapter.updateMyList(reBuildList(recordResult.getRecords()));
                                 Log.i(""+this.getClass(),recordResult.getRecords().get(0).getDistance()+"");
                             }
                         }
@@ -99,14 +100,20 @@ public class RunRecordFragment extends Fragment {
         }
     }
 
-    private void reBuildList(List<RunRecord> records) {
-        records.add(0,null);
-        for(int i = 1;i<records.size()-1;i++){
-            if(records.get(i).getDate().getMonth() != records.get(i+1).getDate().getMonth()){
-                records.add(i,null);
+    private List<RunRecordItem> reBuildList(List<RunRecord> records) {
+        List<RunRecordItem> itemList = new ArrayList<>();
+        int month = 0 ,temp;
+        for(int i = 0;i<records.size();i++){
+            temp = records.get(i).getDate().getMonth();
+            if(month != temp){
+                month = temp;
+                Log.i(""+this.getClass(),"temp="+temp);
+                itemList.add(new RunRecordItem(records.get(i),RunRecordItem.TYPE_MONTH));
             }
+            itemList.add(new RunRecordItem(records.get(i),RunRecordItem.TYPE_NARMAL));
         }
-        LogUtils.i(getClass(),records.size()+"");
+        LogUtils.i(getClass(),"itemlist size"+itemList.size());
+        return itemList;
     }
 
     private void initView(View view) {
