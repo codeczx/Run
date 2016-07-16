@@ -9,8 +9,8 @@ import com.baidubce.services.bos.BosClientConfiguration;
  */
 public class BOSUtils {
 
-    private static final String ACCESS_KEY = "";
-    private static final String SECRET_KEY = "";
+    private static final String ACCESS_KEY = "b43f8e4214e6497dbf6aee6315aa9b69";
+    private static final String SECRET_KEY = "2c02b93def274d7e827f008ee2c05155";
     private static final String ENDPOINT = "http://gz.bcebos.com";
     public static final String BUCKET ="codeczx";
 
